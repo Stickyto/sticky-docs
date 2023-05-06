@@ -1,7 +1,3 @@
-cd src;
-  npm run build;
-cd ..;
-
 docker stop sticky-docs;
 docker rm sticky-docs;
 docker build -t sticky-docs .;
