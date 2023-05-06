@@ -1,0 +1,17 @@
+{
+  "name": "sticky-docs",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "dependencies": {
+    "next": "^13.4.1",
+    "nextra": "^2.5.0",
+    "nextra-theme-docs": "^2.5.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "scripts": {
+    "dev": "next dev -p 3010",
+    "build": "next build",
+    "start": "next start -p 3010"
+  }
+}
