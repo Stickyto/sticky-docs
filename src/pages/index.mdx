@@ -1,3 +1,138 @@
 # Welcome to Sticky
- 
-Hello world
+
+## Authentication
+
+Go to `https://dashboard.sticky.to/my/account/more` to find your public key (generally read only / used by consumers) and private key (danger zone - do not embed in public facing applications!).
+
+Use these keys to authenticate against our API at `https://sticky.to/v1` and `https://sticky.to/v2`. This is a fully RESTful API that sends/receives JSON and behaves exactly as you'd expect.
+
+There is no sandbox environment under a different URL; just send us a message if you want another dashboard with different keys.
+
+Authentication is via `Bearer` tokens.
+
+Some routes accept both public and private keys. One example is `GET /v1/products`. A public key returns basic data like name and images - enough to let a consumer choose a product. A private key returns all of the data you can see in the dashboard.
+
+Prepend the key with `public:` or `private:` for these routes.
+
+### Example: public key
+
+```
+curl --request GET \
+  --url https://sticky.to/v1/users/me \
+  --header 'Authorization: Bearer public:public-afa4c519-1b7f-41ca-9a08-26a64db12dee'
+```
+
+Notice that the response is limited:
+
+```
+{
+  "name": "My dashboard",
+  "currency": "GBP"
+}
+```
+
+### Example: private key
+
+```
+curl --request GET \
+  --url https://sticky.to/v1/users/me \
+  --header 'Authorization: Bearer private:private-371eff35-9bff-461e-b97b-d9405176e257'
+```
+
+Notice that the response is expansive:
+
+```
+{
+  "name": "My dashboard",
+  "currency": "GBP",
+  "email": "me@my-dashboard.com"
+}
+```
+
+## Validate a session code ("access pass")
+
+A session code is in this format:
+
+`https://sticky.to/[...]?sessionId=[SESSION_ID]`
+
+Use a URL parser or a regex to extract the `sessionId` from the query parameters. It will always be a UUID.
+
+Make a `GET` request with your public key; be sure to replace `[SESSION_ID]` with the right value:
+
+```
+curl --request GET \
+  --url 'https://sticky.to/v1/applications/---/session?sessionId=[SESSION_ID]' \
+  --header 'Authorization: Bearer public-afa4c519-1b7f-41ca-9a08-26a64db12dee'
+```
+
+The session code exists when the `id` key in the response matches the `sessionId` from the query parameters:
+
+```
+{
+	"id": "[SESSION_ID]",
+	"crossUserSector": "{\"name\":\"Jack Smith\"}",
+	"userSector": "{\"Verified\":1684269600}",
+	"applicationSector": "{}"
+}
+```
+
+### Step 1: Match IDs
+
+When the session code doesn't exist, the `id` key will be different as our API is creating a new session code for you. This means your code is wrong.
+
+Assert that the `id` matches the `sessionId` you have extracted.
+
+### Step 2: Check for "verification"
+
+JSON parse the `userSector` key into an object.
+
+Assert that the `Verified` key is a number. Reject any other type or no key with name `Verified.`
+
+### Full example
+
+```
+const assert = require('assert')
+const url = require('url')
+
+function isUuid (v) {
+  return typeof v === 'string' && (v.match(/^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/i))
+}
+
+const SESSION_CODE = 'https://sticky.to/go/flow/f7431a9d-cd5e-4ecf-83f0-ca3eb242c5e4?sessionId=6dc6650f-e3f5-4694-99c4-36c547fea121'
+const PUBLIC_KEY = 'public-afa4c519-1b7f-41ca-9a08-26a64db12dee'
+
+;(async () => {
+  try {
+    const urlObject = url.parse(SESSION_CODE, true)
+    const { sessionId } = urlObject.query
+    assert(isUuid(sessionId), 'Assert 1: sessionId is not a UUID; session code is malformed')
+  
+    const r = await fetch(
+      `https://sticky.to/v1/applications/---/session?sessionId=${sessionId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${PUBLIC_KEY}`
+        }
+      }
+    )
+    const asJson = await r.json()
+
+    assert(asJson.id === sessionId, 'Assert 2: Session does not exist; check your code')
+  
+    const userSectorAsJson = JSON.parse(asJson.userSector)
+    assert(typeof userSectorAsJson['Verified'] === 'number', 'Assert 3: Session is not verified')
+
+    // SUCCESS
+    console.log(`Session code ${asJson.id} is valid!`)
+    process.exit(0)
+
+  } catch ({ message }) {
+
+    // FAILURE
+    console.error(message)
+    process.exit(1)
+
+  }
+})()
+
+```
