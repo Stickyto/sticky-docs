@@ -1,4 +1,4 @@
-FROM node:20 as base
+FROM node:20.1.0 as base
 WORKDIR /src
 USER root
 
