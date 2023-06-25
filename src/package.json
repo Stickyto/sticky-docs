@@ -1,6 +1,6 @@
 {
   "name": "sticky-docs",
-  "version": "1.0.0",
+  "version": "7.4.0",
   "main": "src/index.js",
   "dependencies": {
     "next": "^13.4.1",
