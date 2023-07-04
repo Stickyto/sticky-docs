@@ -1,0 +1,37 @@
+# Kid safety
+
+## Sticky's "kid safety" is respected throughout its code
+
+Sticky takes "kid safety" extremely seriously. There are 37 references to "kid safety" in the code:
+
+![Sticky's "kid safety" is respected throughout its code](/kid-safe-2.png)
+
+## Sticky's platform has specific controls for "kid safety"
+
+Each sticky (sticker or QR code) has a "Kid safe" toggle:
+
+![Each sticky (sticker or QR code) has a "Kid safe" toggle](/kid-safe-1.png)
+
+**When the toggle is turned OFF**, Sticky sets a `sticky-sessionid` cookie containing a session ID, a persistent identifier. This session ID refers to a server-side record which contains PII and references event records that contain PII like IP addresses, locations and user agent strings. This is not "kid safe".
+
+By tapping a sticky or scanning a QR code, you can see the server sets its cookie:
+
+![You can see the server sets its cookie](/kid-safe-3.png)
+
+**When the toggle is turned ON**, Sticky does not create a server-side record or set a cookie. Instead, Sticky uses a single predefined "kid safe" session shared between all kids. This can be seen through HTTP; no cookie is set anymore:
+
+![No cookie is set anymore](/kid-safe-4.png)
+
+No matter the device, activity is logged against the single "kid safe" session, always with the same ID:
+
+![Activity is logged against the single "kid safe" session](/kid-safe-5.png)
+
+This session is hard-defined in Sticky's code:
+
+![This session is hard-defined in Sticky's code](/kid-safe-6.png)
+
+Every event record is geo-located for reporting and analytics but the IP address is not stored. Sticky proves this at the database level:
+
+![Sticky proves kid safety at the database level](/kid-safe-7.png)
+
+The geolocation is never more precise than the current city, is not (and cannot be) connected to an individual as there is no cookie or persistent identifier.
