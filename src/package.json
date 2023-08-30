@@ -13,5 +13,9 @@
     "dev": "next dev -p 3010",
     "build": "next build",
     "start": "next start -p 3010"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Stickyto/sticky-docs.git"
   }
 }
