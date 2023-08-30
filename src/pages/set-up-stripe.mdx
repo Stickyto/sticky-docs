@@ -1,0 +1,45 @@
+# Set up Stripe
+
+Go to **[dashboard.stripe.com/login](https://dashboard.stripe.com/login)** and log in.
+
+Go to the **Developers** page:
+
+![](/set-up-stripe-1.png)
+
+Go to the **Webhooks** page then choose **Add an endpoint**:
+
+![](/set-up-stripe-2.png)
+
+Set **Endpoint URL** to `https://sticky.to/v2/payhook/GATEWAY_STRIPE` then choose **+ Select events**:
+
+![](/set-up-stripe-3.png)
+
+Choose **Select all events** then choose **Add events**:
+
+![](/set-up-stripe-4.png)
+
+Scroll to the bottom of the page then choose **Add endpoint**:
+
+![](/set-up-stripe-5.png)
+
+Go to the **Developers** page:
+
+![](/set-up-stripe-6.png)
+
+Go to the **API keys** page, **copy the key that starts with `pk_live_` and keep this somewhere** like a note or blank email, then choose **Create secret key**:
+
+![](/set-up-stripe-7.png)
+
+Choose a key name (a good format is "Sticky" plus today's date) then choose **Create**:
+
+![](/set-up-stripe-8.png)
+
+**Copy the key that starts with `sk_live_` and keep this somewhere** like a note or blank email. You won't get to see this key again so copy it now.
+
+![](/set-up-stripe-9.png)
+
+Go to **[sticky.to/go/flow/633afcbf-e057-45f9-8551-c2a21061f828](https://sticky.to/go/flow/633afcbf-e057-45f9-8551-c2a21061f828)**, paste in the keys you have copied and choose **Send to Sticky**:
+
+![](/set-up-stripe-10.png)
+
+Your Stripe account will be connected to all flows in the Sticky dashboard within 24 hours.
