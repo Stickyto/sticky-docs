@@ -19,7 +19,7 @@ Prepend the key with `public:` or `private:` for these routes.
 ```
 curl --request GET \
   --url https://sticky.to/v1/users/me \
-  --header 'Authorization: Bearer public:public-afa4c519-1b7f-41ca-9a08-26a64db12dee'
+  --header 'Authorization: Bearer public:public-b3c64fdc-b37f-44fc-83e4-53206e7adb8c'
 ```
 
 Notice that the response is limited:
@@ -62,7 +62,7 @@ Make a `GET` request with your public key; be sure to replace `[SESSION_ID]` wit
 ```
 curl --request GET \
   --url 'https://sticky.to/v1/applications/---/session?sessionId=[SESSION_ID]' \
-  --header 'Authorization: Bearer public-afa4c519-1b7f-41ca-9a08-26a64db12dee'
+  --header 'Authorization: Bearer public-b3c64fdc-b37f-44fc-83e4-53206e7adb8c'
 ```
 
 The session code exists when the `id` key in the response matches the `sessionId` from the query parameters:
@@ -98,8 +98,8 @@ function isUuid (v) {
   return typeof v === 'string' && (v.match(/^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/i))
 }
 
-const SESSION_CODE = 'https://sticky.to/go/flow/f7431a9d-cd5e-4ecf-83f0-ca3eb242c5e4?sessionId=6dc6650f-e3f5-4694-99c4-36c547fea121'
-const PUBLIC_KEY = 'public-afa4c519-1b7f-41ca-9a08-26a64db12dee'
+const SESSION_CODE = 'https://sticky.to/go/flow/c2f22399-b6db-483e-9f20-1fdc98ee9d38?sessionId=6ae3fd99-1de8-4a5a-99d6-00228d3bafe2'
+const PUBLIC_KEY = 'public-b3c64fdc-b37f-44fc-83e4-53206e7adb8c'
 
 ;(async () => {
   try {

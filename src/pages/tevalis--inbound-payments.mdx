@@ -1,0 +1,31 @@
+# Tevalis: Inbound payments
+
+POST JSON to `https://sticky.to/v2/connectionhook/---/CONNECTION_TEVALIS/payment` with `Authorization` header as `Bearer [YOUR_PRIVATE_KEY]`:
+
+```
+{
+	"sessionId": "6ae3fd99-1de8-4a5a-99d6-00228d3bafe2",
+	"total": 100,
+	"discount": 10,
+}
+```
+
+`total`: Integer ($1.00 USD = `100`).
+
+`discount`: Integer (not a %; $0.20 = `20`); optional.
+
+`paymentGatewayId`: String (external reference); optional.
+
+## Full example
+
+```
+curl --request POST \
+  --url http://localhost:8000/v2/connectionhook/---/CONNECTION_TEVALIS/payment \
+  --header 'Authorization: Bearer [YOUR_PRIVATE_KEY]' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "sessionId": "6ae3fd99-1de8-4a5a-99d6-00228d3bafe2",
+    "total": 100,
+    "discount": 20
+}'
+```
