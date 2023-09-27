@@ -1,10 +1,10 @@
-# Tevalis: Inbound payments
+# Sending payments to Sticky
 
 POST JSON to `https://sticky.to/v2/connectionhook/---/CONNECTION_TEVALIS/private--payment` with `Authorization` header as `Bearer [YOUR_PRIVATE_KEY]`:
 
 ```
 {
-	"sessionId": "6ae3fd99-1de8-4a5a-99d6-00228d3bafe2",
+	"sessionId": "1667e296-cb62-4f6e-8aa7-e898d62c3d11",
 	"total": 100
 }
 ```
@@ -25,7 +25,7 @@ curl --request POST \
   --header 'Authorization: Bearer [YOUR_PRIVATE_KEY]' \
   --header 'Content-Type: application/json' \
   --data '{
-    "sessionId": "6ae3fd99-1de8-4a5a-99d6-00228d3bafe2",
+    "sessionId": "1667e296-cb62-4f6e-8aa7-e898d62c3d11",
     "total": 100
 }'
 ```
