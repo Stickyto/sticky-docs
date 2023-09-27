@@ -1,6 +1,6 @@
 # Tevalis: Inbound payments
 
-POST JSON to `https://sticky.to/v2/connectionhook/---/CONNECTION_TEVALIS/payment` with `Authorization` header as `Bearer [YOUR_PRIVATE_KEY]`:
+POST JSON to `https://sticky.to/v2/connectionhook/---/CONNECTION_TEVALIS/private--payment` with `Authorization` header as `Bearer [YOUR_PRIVATE_KEY]`:
 
 ```
 {
@@ -20,7 +20,7 @@ POST JSON to `https://sticky.to/v2/connectionhook/---/CONNECTION_TEVALIS/payment
 
 ```
 curl --request POST \
-  --url http://localhost:8000/v2/connectionhook/---/CONNECTION_TEVALIS/payment \
+  --url http://localhost:8000/v2/connectionhook/---/CONNECTION_TEVALIS/private--payment \
   --header 'Authorization: Bearer [YOUR_PRIVATE_KEY]' \
   --header 'Content-Type: application/json' \
   --data '{
