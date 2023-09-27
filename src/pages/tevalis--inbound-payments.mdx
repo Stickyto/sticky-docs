@@ -10,6 +10,8 @@ POST JSON to `https://sticky.to/v2/connectionhook/---/CONNECTION_TEVALIS/private
 }
 ```
 
+`sessionId`: UUID.
+
 `total`: Integer ($1.00 USD = `100`).
 
 `discount`: Integer (not a %; $0.20 = `20`); optional.
@@ -20,7 +22,7 @@ POST JSON to `https://sticky.to/v2/connectionhook/---/CONNECTION_TEVALIS/private
 
 ```
 curl --request POST \
-  --url http://localhost:8000/v2/connectionhook/---/CONNECTION_TEVALIS/private--payment \
+  --url https://sticky.to/v2/connectionhook/---/CONNECTION_TEVALIS/private--payment \
   --header 'Authorization: Bearer [YOUR_PRIVATE_KEY]' \
   --header 'Content-Type: application/json' \
   --data '{
