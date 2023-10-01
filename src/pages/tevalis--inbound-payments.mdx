@@ -1,6 +1,6 @@
 # Sending payments to Sticky
 
-POST JSON to `https://sticky.to/v2/connectionhook/---/CONNECTION_TEVALIS/private--payment` with `Authorization` header as `Bearer [YOUR_PRIVATE_KEY]`:
+POST JSON to `https://sticky.to/v2/connectionhook/---/CONNECTION_TEVALIS/private--payment` with an `Authorization` header as `Bearer [YOUR_PRIVATE_KEY]`. Don't prepend the key with `private:`.
 
 ```
 {
@@ -17,6 +17,20 @@ POST JSON to `https://sticky.to/v2/connectionhook/---/CONNECTION_TEVALIS/private
 
 `paymentGatewayId`: String (external reference); optional.
 
+`cart`: Array of objects validated strictly; optional:
+
+```
+[
+  {
+    "productId": "UUID (must be a UUID that exists on Sticky); optional",
+    "productName": "String; required",
+    "productPrice": "Integer; required",
+    "productTheirId": "String (ID of a product on your remote system e.g. a PLU); optional",
+    "quantity": "Integer; required"
+  }
+]
+```
+
 ## Full example
 
 ```
@@ -26,6 +40,15 @@ curl --request POST \
   --header 'Content-Type: application/json' \
   --data '{
     "sessionId": "1667e296-cb62-4f6e-8aa7-e898d62c3d11",
-    "total": 100
+    "total": 50,
+    "cart": [
+      {
+        "productName": "Product name",
+        "quantity": 2,
+        "productId": "f5fa03ee-ed1b-4454-a079-0a1dfa2477a0",
+        "productTheirId": "REMOTE-SYSTEM-PLU-123",
+        "productPrice": 25
+      }
+    ]
 }'
 ```

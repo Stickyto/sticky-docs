@@ -6,13 +6,21 @@ Go to `https://dashboard.sticky.to/my/account/more` to find your public key (gen
 
 Use these keys to authenticate against our API at `https://sticky.to/v1` and `https://sticky.to/v2`. This is a fully RESTful API that sends/receives JSON and behaves exactly as you'd expect.
 
-There is no sandbox environment under a different URL; just send us a message if you want another dashboard with different keys.
+There is no sandbox environment under a different URL. Send us a message if you want another dashboard with different keys.
 
 Authentication is via `Bearer` tokens.
+
+### Routes with dynamic authentication
 
 Some routes accept both public and private keys. One example is `GET /v1/products`. A public key returns basic data like name and images - enough to let a consumer choose a product. A private key returns all of the data you can see in the dashboard.
 
 Prepend the key with `public:` or `private:` for these routes.
+
+### Routes without dynamic authentication
+
+Other routes accept just public or private keys. One example is `POST /v1/products` which can only be called with a private key.
+
+Don't prepend the key with `private:`.
 
 ### Example: public key
 
