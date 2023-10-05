@@ -1,5 +1,7 @@
 # Sending payments to Sticky
 
+## How to
+
 POST JSON to `https://sticky.to/v2/connectionhook/---/CONNECTION_TEVALIS/private--payment` with an `Authorization` header as `Bearer [YOUR_PRIVATE_KEY]`. Don't prepend the key with `private:`.
 
 ```
@@ -52,3 +54,21 @@ curl --request POST \
     ]
 }'
 ```
+
+## Questions and answers
+
+### Is the discount a total of discount on the bill (regardless of entry point, i.e. Sticky or manually applied on the POS), or should it just be the Sticky discount?
+
+`discount` should be a total of discount on the bill, regardless of entry point.
+
+### Should the `total` be before or after a discount (scenario: bill was 120 discounted by 20 to 100)?
+
+`discount` should be `20` and `total` should be 100. `total` is the actual amount the consumer pays.
+
+### Is each `cart` item before or after a discount?
+
+Sticky doesn't have support for discounts per `cart` item. The best approach is setting `productPrice` as a value before any discounts, e.g. 120 in the previous question.
+
+### Is `cart` item `productPrice` the price of the line, or the price of the product (scenario: there are 2 of the same product each costing 50)?
+
+It's the price of the product. Send `productPrice` as 50 with a quantity of 2.
