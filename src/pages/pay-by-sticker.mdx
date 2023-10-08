@@ -1,0 +1,38 @@
+# Pay by sticker
+
+## Getting UUIDs
+
+Use the dashboard URL when you are looking at the right sticker or flow.
+
+For stickers (`thingId`):
+
+`http://localhost:3003/me/stickies/[UUID_IS_HERE]`
+
+For flows (`applicationId`):
+
+`http://localhost:3003/me/flows/[UUID_IS_HERE]`
+
+## How to
+
+POST JSON to `https://sticky.to/v2/trigger/payByThing` with an `Authorization` header as `Bearer [YOUR_PRIVATE_KEY]`.
+
+The sticker will automatically change back to its previous flow when the payment is successful.
+
+```
+{
+  "total": 120,
+  "currency": "GBP",
+  "thingId": "9ec78ca7-1c60-40f3-807d-d08c7a170e76",
+  "applicationId": "83f35dc3-f412-4f0e-81f8-67cf76324a2c"
+}
+```
+
+`total`: Integer ($1.00 USD = `100`).
+
+`currency`: String (`USD`, `GBP`, `EUR`...).
+
+`thingId`: UUID; ID of the sticker.
+
+`applicationId`: UUID; ID of the flow.
+
+`userPaymentId`: String (external reference); optional.
