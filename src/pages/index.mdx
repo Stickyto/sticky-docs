@@ -144,14 +144,14 @@ const PUBLIC_KEY = 'public-b3c64fdc-b37f-44fc-83e4-53206e7adb8c'
     const asJson = await r.json()
 
     assert(asJson.id === sessionId, 'Assert 2: Session does not exist; check your code')
-  
+
     const userSectorAsJson = JSON.parse(asJson.userSector)
-    assert(typeof userSectorAsJson['Verified'] === 'number', 'Assert 3: Session is not verified')
+    const { Verified, Discount } = userSectorAsJson
+
+    assert(typeof Verified === 'number', 'Assert 3: Session is not verified')
 
     // SUCCESS
-    const { Discount } = userSectorAsJson
     console.log(`Session code ${asJson.id} is valid (Discount=${Discount})!`)
-
     process.exit(0)
 
   } catch ({ message }) {
