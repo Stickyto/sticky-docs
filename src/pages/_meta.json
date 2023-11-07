@@ -1,5 +1,6 @@
 {
   "index": "Home",
   "tevalis--inbound-payments": "Sending payments to Sticky",
-  "pay-by-sticker": "Pay by sticker"
+  "pay-by-sticker": "Pay by sticker",
+  "embedded-pos": "Embedded POS"
 }

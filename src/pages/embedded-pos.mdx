@@ -1,0 +1,29 @@
+# Embedded POS
+
+Sticky's POS ("Point of sale") can be embedded in an iframe.
+
+You will need to expose your private key, so only embed POS in safe, non-consumer environments where the URL is not visible.
+
+## URL
+
+Copy the URL from the "Point of sale" in the dashboard.
+
+Example:
+
+```
+https://dashboard.sticky.to/ops-manager?userPrivateKey=[YOUR_PRIVATE_KEY]&userPublicKey=[YOUR_PUBLIC_KEY]
+```
+
+### `autoAddPayment` URL parameter
+
+You can automatically add a payment by setting `autoAddPayment=true`.
+
+Doing this means a POS user only needs to "Add to total" and "Pay by Sticky" or "Pay by link".
+
+`true` is the only value that works; any other value will be ignored.
+
+Example:
+
+```
+https://dashboard.sticky.to/ops-manager?userPrivateKey=[YOUR_PRIVATE_KEY]&userPublicKey=[YOUR_PUBLIC_KEY]&autoAddPayment=true
+```
