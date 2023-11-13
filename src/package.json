@@ -4,8 +4,8 @@
   "main": "src/index.js",
   "dependencies": {
     "next": "^13.4.8",
-    "nextra": "^2.8.0",
-    "nextra-theme-docs": "^2.8.0",
+    "nextra": "^2.13.2",
+    "nextra-theme-docs": "^2.13.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
