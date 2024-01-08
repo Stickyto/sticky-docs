@@ -1,0 +1,51 @@
+# Embedded payments
+
+## Node.js
+
+```
+const crypto = require('crypto')
+
+const total = '500'
+const currency = 'GBP'
+const userPaymentId = '293'
+
+const flow = 'https://sticky.to/go/flow/123'
+const privateKey = 'private-456'
+
+function getSignature(what, privateKey) {
+  return crypto.createHmac('sha512', privateKey)
+    .update(what)
+    .digest('hex')
+}
+
+const url = `${flow}?total=${total}&currency=${currency}&userPaymentId=${userPaymentId}&hash=${getSignature(`total=${total}&currency=${currency}&userPaymentId=${userPaymentId}`, privateKey)}`
+
+console.log(url)
+```
+
+## PHP
+
+```
+<?php
+
+  $total = '500';
+  $currency = 'GBP';
+  $userPaymentId = '293';
+
+  $flow = 'https://sticky.to/go/flow/123';
+  $privateKey = 'private-456';
+
+  function get_signature($what, $privateKey) {
+    return hash_hmac(
+      'sha512',
+      $what,
+      $privateKey,
+      false
+    );
+  }
+
+  $url = $flow . '?total=' . $total . '&currency=' . $currency . '&userPaymentId=' . $userPaymentId . '&hash=' . get_signature('total=' . $total . '&currency=' . $currency . '&userPaymentId=' . $userPaymentId, $privateKey);
+
+  echo $url;
+?>
+```
