@@ -1,0 +1,166 @@
+# Webhooks
+
+Go to **[Account → ...](https://dashboard.sticky.to/my/account/more)** in your Sticky dashboard.
+
+Find **Activity webhook**:
+
+<img src="/webhooks-1.png" style={{ maxWidth: '420px', marginTop: '16px', border: '2px solid #607481', borderRadius: '6px' }} />
+
+**All activity will trigger your webhook (e.g. sticker taps, not only successful payments). Pick and choose from activity arriving at your webhook URL by looking at each webhook body's `v2.event.type` key.**
+
+## `v2.event.type` keys
+
+ - `SESSION_READ`: sticker tap
+
+ - `SESSION_CART_PAY`: successful payment
+
+Webhook URLs can be updated instantly; there is no delay for activity to arrive at a new URL.
+
+Set up a free **[ngrok](https://ngrok.io)** tunnel to test your webhook URL.
+
+In the webhook body you will see keys in addition to the `v2` key. Use keys under the `v2` key only. Other keys are deprecated and are being removed.
+
+## Example body: Sticker tap
+
+```
+{
+  "v2": {
+    "event": {
+      "type": "SESSION_READ",
+      "id": "[UUID]",
+      "customData": {}
+    },
+    "flow": {
+      "id": "[UUID]",
+      "userId": "[UUID]",
+      "name": "Food and drink",
+      "stickypayMerchantPercentage": 100,
+      "stickypayPerTx": 0,
+      "stickypayPerTxCurrency": "GBP",
+      "gateway": "GATEWAY_STICKYPAY",
+      "country": "GBR",
+      "tags": []
+    },
+    "sticky": {
+      "id": "[UUID]",
+      "userId": "[UUID]",
+      "designId": "v3-sticky",
+      "name": "Room 15",
+      "applicationId": "[UUID]",
+      "productId": "[UUID]",
+      "federatedUserIds": [],
+      "isKidSafe": false,
+      "tags": []
+    },
+    "session": {
+      "id": "[UUID]",
+      "crossUserSector": {},
+      "userSector": {},
+      "applicationSector": {}
+    }
+  }
+}
+```
+
+## Example body: Payment
+
+```
+{
+  "v2": {
+    "event": {
+      "type": "SESSION_CART_PAY",
+      "id": "[UUID]",
+      "customData": {
+        "total": 360,
+        "discount": 0,
+        "tip": 0,
+        "currency": "GBP",
+        "gateway": "GATEWAY_NOOP",
+        "cart": []
+      }
+    },
+    "payment": {
+      "id": "[UUID]",
+      "sessionId": "[UUID]",
+      "userId": "[UUID]",
+      "applicationId": "[UUID]",
+      "thingId": "[UUID]",
+      "lastFederatedUserId": null,
+      "originPaymentIdsDelete": [],
+      "originPaymentIdsPay": [],
+      "sessionPaidAt": 1707381745,
+      "refundedAt": null,
+      "refundedTotal": 0,
+      "currency": "GBP",
+      "total": 360,
+      "totalCpa": 0,
+      "cpaPeriod": null,
+      "discount": 0,
+      "tip": 0,
+      "newStatusDone": false,
+      "newMaster": false,
+      "gateway": "GATEWAY_NOOP",
+      "stickypayMerchantPercentage": 100,
+      "stickypayPerTx": 0,
+      "stickypayPerTxCurrency": "GBP",
+      "stickypayIsCorporate": false,
+      "paymentGatewayId": null,
+      "paymentGatewayExtra": null,
+      "customDataPublic": "{}",
+      "tags": [],
+      "name": "Tim",
+      "companyName": null,
+      "email": "tim@sticky.to",
+      "phone": null,
+      "address": null,
+      "collectionTime": "10:45",
+      "giftAid": false,
+      "distributionMode": null,
+      "marketing": false,
+      "extra": "---",
+      "userPrivateKey": null
+    },
+    "flow": {
+      "id": "[UUID]",
+      "userId": "[UUID]",
+      "name": "Food and drink",
+      "stickypayMerchantPercentage": 100,
+      "stickypayPerTx": 0,
+      "stickypayPerTxCurrency": "GBP",
+      "gateway": "GATEWAY_STICKYPAY",
+      "country": "GBR",
+      "tags": []
+    },
+    "sticky": {
+      "id": "[UUID]",
+      "userId": "[UUID]",
+      "designId": "v3-sticky",
+      "name": "Room 15",
+      "applicationId": "[UUID]",
+      "productId": "[UUID]",
+      "federatedUserIds": [],
+      "isKidSafe": false,
+      "tags": []
+    },
+    "session": {
+      "id": "[UUID]",
+      "crossUserSector": {
+        "name": "Tim",
+        "email": "tim@sticky.to"
+      },
+      "userSector": {},
+      "applicationSector": {
+        "paymentId": "[UUID]"
+      }
+    }
+  }
+}
+```
+
+## Why isn't my webhook arriving?
+
+ - Have you set the **Method** to `POST` if you are expecting a HTTP `POST` request?
+
+ - Are you using a URL accessible over the public internet? `localhost`, URLs behind a VPN or URLS inside a corporate network will not work
+
+ - Are you using a HTTPS URL? URLs that start with `http://` are not allowed
