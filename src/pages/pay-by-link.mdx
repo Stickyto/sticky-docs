@@ -1,0 +1,108 @@
+# Pay by link
+
+## One time set up: Add a "Take a payment flow"
+
+Choose **Add a flow**:
+
+![](/pbl-flow-1.png)
+
+Choose **Take a payment**:
+
+![](/pbl-flow-2.png)
+
+Go inside the flow by choosing it from the list.
+
+## Get its UUID
+
+Use the dashboard URL when you are looking at the flow.
+
+`https://dashboard.sticky.to/me/flows/[UUID_OF_FLOW]`
+
+Keep the `[UUID_OF_FLOW]` to hand.
+
+## Step 1: Add a payment
+
+POST JSON to `https://sticky.to/v1/applications/unknown-application-3/payments` with an `Authorization` header as `Bearer [YOUR_PRIVATE_KEY]`. Even though this URL looks strange it is 100% correct; you don't need `[UUID_OF_FLOW]` until later.
+
+```
+{
+  "total": 123,
+  "currency": "GBP",
+  "userPaymentId": "My external reference",
+  "email": "tim@sticky.to",
+  "phone": "+44123123123"
+}
+```
+
+`total`: Integer ($1.00 USD = `100`).
+
+`currency`: String (`USD`, `GBP`, `EUR`...).
+
+`userPaymentId`: String (external reference); optional.
+
+`email`: Email; optional.
+
+`phone`: Phone; optional. Include country code for safety.
+
+This will return:
+
+```
+{
+  "id": "[UUID_OF_CREATED_PAYMENT]"
+}
+```
+
+Keep the `[UUID_OF_CREATED_PAYMENT]` to hand.
+
+## Step 2: Create a link
+
+POST JSON to `https://sticky.to/v2/short-links` with an `Authorization` header as `Bearer [YOUR_PRIVATE_KEY]`.
+
+The JSON's ` whichUrl` key must have the format:
+
+`https://sticky.to/go/flow/[UUID_OF_FLOW]?paymentId=[UUID_OF_CREATED_PAYMENT]`
+
+```
+{
+  "whichUrl": "https://sticky.to/go/flow/[UUID_OF_FLOW]?paymentId=[UUID_OF_CREATED_PAYMENT]",
+  "type": "REDIRECT"
+}
+```
+
+This will return:
+
+```
+{
+  "id": "[UUID_OF_LINK]"
+}
+```
+
+Keep the `[UUID_OF_LINK]` to hand.
+
+## Step 3: Send the link
+
+POST JSON to `https://sticky.to/v2/trigger/share` with an `Authorization` header as `Bearer [YOUR_PRIVATE_KEY]`.
+
+You can POST to these URLs multiple times.
+
+### SMS
+
+```
+{
+  "entity": "short-link",
+  "entityId": "[UUID_OF_LINK]",
+  "destination": "sms",
+  "to": "+44123123123"
+}
+```
+
+### Email
+
+```
+{
+  "entity": "short-link",
+  "entityId": "[UUID_OF_LINK]",
+  "destination": "email",
+  "to": "tim@sticky.to"
+}
+```
