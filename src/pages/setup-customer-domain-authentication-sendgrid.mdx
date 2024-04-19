@@ -1,0 +1,33 @@
+# Setting Up Customer Domain Authentication in SendGrid
+
+## Steps
+
+### Access SendGrid
+
+1. Log into SendGrid using your administrative credentials.
+2. Navigate to 'Settings' and then select 'Sender Authentication'.
+
+### Domain Authentication
+
+1. Click on 'Get Started' under the 'Domain Authentication' section.
+2. Enter the customer’s domain name and select whether they will be using the domain to send emails via SendGrid.
+
+### Generate DNS Records
+
+1. SendGrid will generate the necessary DKIM and TXT records for the domain authentication.
+2. Copy these records to be sent to the customer or directly to their DNS provider.
+
+### Verification Process
+
+1. Instruct the customer to add these records to their domain’s DNS settings through their domain registrar's control panel.
+2. Confirm with the customer once they have updated their DNS records.
+
+### Verify Records in SendGrid
+
+1. Once the customer has confirmed adding the records, click the 'Verify' button in SendGrid to check the records.
+2. If there are issues, troubleshoot common problems (like propagation delays or incorrect record values) and advise accordingly.
+
+### Documentation and Record Keeping
+
+1. Document the customer’s domain, the records provided, and the date of setup in your internal CRM or documentation tool.
+2. Note any follow-up actions or unresolved issues.
