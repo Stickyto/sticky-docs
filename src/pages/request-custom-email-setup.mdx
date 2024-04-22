@@ -1,24 +1,20 @@
-# Requesting Custom Email Setup
+# Requesting custom email setup
 
-To request a custom email setup using your domain, please email us at [dev@sticky.to](mailto:dev@sticky.to) with your Dashboard ID. We will provide you with the necessary DKIM and TXT records and detailed instructions on how to add them to your domain hosting.
+**To request a custom email setup using your domain, please email [dev@sticky.to](mailto:dev@sticky.to) with your Dashboard ID.**
 
-## Obtaining DNS Records
-
-After you've contacted us with your Dashboard ID, our team will create the required DNS records for your domain. These include:
+Our team will then create the required DNS records for your domain. These include:
 
 1. **DKIM (DomainKeys Identified Mail)**: Helps to ensure that your emails are not marked as spam.
 2. **TXT Records**: Used for verifying domain ownership and essential email security settings.
 
-## Adding DNS Records to Your Domain Hosting
-
-### General Instructions
+## Instructions
 
 1. Log in to your domain hosting provider's control panel.
 2. Navigate to the DNS management page.
 3. Add the provided DKIM and TXT records to your DNS settings.
 4. Save changes and wait for the DNS to propagate, which may take up to 48 hours.
 
-### Specific Instructions for Popular Hosting Sites
+## Specific instructions for popular hosting sites
 
 #### GoDaddy
 
@@ -47,8 +43,36 @@ After you've contacted us with your Dashboard ID, our team will create the requi
 3. Go to the **Advanced DNS** tab and click on **Add New Record**.
 4. Input the DNS records provided and save your changes.
 
-### After Adding DNS Records
+### After adding DNS records
 
-After you have added the DNS records to your domain's DNS settings, please inform us by replying to the initial email or contacting our support team. We will verify the records and finalize the setup of your custom email.
+After you have added the DNS records to your domain, please reply to our initial email. We will verify the records and finalize the setup.
 
-For further assistance or if you encounter any issues, do not hesitate to contact our support team at [dev@sticky.to](mailto:dev@sticky.to).
+For further assistance or if you encounter any issues, do not hesitate to contact us at [dev@sticky.to](mailto:dev@sticky.to).
+
+# Internal process
+
+### Access
+
+1. Log into SendGrid.
+1. Navigate to 'Settings' and then select 'Sender Authentication'.
+
+### Authenticate
+
+1. Click on 'Get Started' under the 'Domain Authentication' section.
+1. Enter the customer's domain name and select whether they will be using the domain to send emails via SendGrid.
+
+### Generate
+
+1. SendGrid will generate the necessary DKIM and TXT records for the domain authentication.
+1. Copy these records and send them to the customer or apply them directly.
+
+### Verify
+
+1. Instruct the customer to add these records to their domain's DNS settings through their domain registrar's control panel.
+1. Confirm with the customer once they have updated their DNS records.
+1. Once the customer has confirmed adding the records, click the 'Verify' button in SendGrid to check the records.
+1. If there are issues, troubleshoot common problems (like propagation delays or incorrect record values) and advise accordingly.
+
+### Record
+
+1. Document the customer's domain, the records provided and the date of setup in GD.
