@@ -1,4 +1,4 @@
-{
+export default {
   "index": "Home",
   "pay-by-sticker": "Pay by sticker",
   "pay-by-link": "Pay by link",
