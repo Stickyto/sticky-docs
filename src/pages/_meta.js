@@ -3,7 +3,10 @@ export default {
   "pay-by-sticker": "Pay by sticker",
   "pay-by-link": "Pay by link",
   "webhooks": "Webhooks",
-  "tevalis--inbound-payments": "Sending payments to Sticky",
+  "tevalis--inbound-payments": "Sending payments to us",
   "embedded-pos": "Embedded POS",
-  "woocommerce": "WooCommerce"
+  "woocommerce": "WooCommerce",
+  "kid-safety": {
+    "display": "hidden"
+  }
 }

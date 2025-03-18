@@ -1,4 +1,4 @@
-# Sending payments to Sticky
+# Sending payments to us
 
 ## How to
 
@@ -24,7 +24,7 @@ POST JSON to `https://sticky.to/v2/connectionhook/---/CONNECTION_TEVALIS/private
 ```
 [
   {
-    "productId": "UUID (must be a UUID that exists on Sticky); optional",
+    "productId": "UUID (must be a UUID that exists); optional",
     "productName": "String; required",
     "productPrice": "Integer; required",
     "productTheirId": "String (ID of a product on your remote system e.g. a PLU); optional",
@@ -57,7 +57,7 @@ curl --request POST \
 
 ## Questions and answers
 
-### Is the discount a total of discount on the bill (regardless of entry point, i.e. Sticky or manually applied on the POS), or should it just be the Sticky discount?
+### Is the discount a total of discount on the bill (regardless of entry point, i.e. in dashboard or manually applied on the POS), or should it just be the in dashboard discount?
 
 `discount` should be a total of discount on the bill, regardless of entry point.
 
@@ -67,7 +67,7 @@ curl --request POST \
 
 ### Is each `cart` item before or after a discount?
 
-Sticky doesn't have support for discounts per `cart` item. The best approach is setting `productPrice` as a value before any discounts, e.g. 120 in the previous question.
+We don't have support for discounts per `cart` item. The best approach is setting `productPrice` as a value before any discounts, e.g. 120 in the previous question.
 
 ### Is `cart` item `productPrice` the price of the line, or the price of the product (scenario: there are 2 of the same product each costing 50)?
 
