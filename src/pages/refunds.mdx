@@ -1,0 +1,23 @@
+# Refunds
+
+POST JSON to `https://sticky.to/v1/applications/-/session/events` using your private key in the `Authorization` header. Prepend it with `Bearer private:`.
+
+In the body provide:
+
+ - `type`: always `SESSION_CART_REFUND`
+ - `paymentId`: UUID of the payment you want to refund
+ - `refundAmount`: integer total (55 = 55 cents; 155 = 1 dollar and 55 cents)
+ - `refundedReason`: *optional* internal refund reason (e.g. "customer cancelled")
+
+```
+curl 'https://sticky.to/v1/applications/-/session/events' \
+  -H 'accept: application/json' \
+  -H 'authorization: Bearer private:private-52e0e098-xxxx-xxxx-xxxx-xxxxxxxxxxxx//' \
+  -H 'content-type: application/json' \
+  --data-raw '[ \
+    {"type":"SESSION_CART_REFUND", \
+    "paymentId":"b1b16e91-xxxx-xxxx-xxxx-xxxxxxxxxxxx", \
+    "refundAmount":55, \
+    "refundedReason":"REF1" \
+  }]';
+```

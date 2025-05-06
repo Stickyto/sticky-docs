@@ -1,21 +1,13 @@
-# Welcome
+## API endpoints
 
-## Get started!
-
- 1. **[Create a dashboard](https://dashboard.sticky.to/sign-up/61L1BPJRB4)**
- 1. **[Join our Discord channel](https://discord.gg/JaRaGxNd)**
-
-## Terminology
-
- - `thingId` means the ID of a sticky (contactless sticker)
- - `applicationId` means the ID of a flow (solution a contactless sticker is connected to)
- - `federatedUserId` means the ID of a team member
+ - `https://sticky.to`
+ - `https://instantdebit.co.uk`
 
 ## Authentication
 
-Go to `https://dashboard.sticky.to/my/account/more` to find your public key (generally read only / used by consumers) and private key (danger zone - do not embed in public facing applications!).
+Go to `https://dashboard.sticky.to/my/account/more` to find your public key (read only / used by consumers) and private key (danger - do not embed in public facing scenarios!).
 
-Use these keys to authenticate against our API at `https://sticky.to/v1` and `https://sticky.to/v2`. This is a fully RESTful API that sends/receives JSON and behaves exactly as you'd expect.
+Use these keys to authenticate against our API, which is fully RESTful API and sends/receives JSON exactly as you'd expect.
 
 There is no sandbox environment under a different URL. Send us a message if you want another dashboard with different keys.
 
@@ -33,11 +25,13 @@ Other routes accept just public or private keys. One example is `POST /v1/produc
 
 Don't prepend the key with `private:`.
 
+In the examples below, add the correct domain before `/v1` or `/v2`, for example `https://sticky.to/v2` or `https://instantdebit.co.uk/v2`.
+
 ### Example: public key
 
 ```
 curl --request GET \
-  --url https://sticky.to/v1/users/me \
+  --url /v1/users/me \
   --header 'Authorization: Bearer public:public-b3c64fdc-b37f-44fc-83e4-53206e7adb8c'
 ```
 
@@ -54,7 +48,7 @@ Notice that the response is limited:
 
 ```
 curl --request GET \
-  --url https://sticky.to/v1/users/me \
+  --url /v1/users/me \
   --header 'Authorization: Bearer private:private-371eff35-9bff-461e-b97b-d9405176e257'
 ```
 
@@ -68,104 +62,12 @@ Notice that the response is expansive:
 }
 ```
 
-## Validate a session code ("access pass")
+## Terminology
 
-A session code is in this format:
+ - `thingId` means the ID of a sticky (contactless sticker)
+ - `applicationId` means the ID of a flow (solution a contactless sticker is connected to)
+ - `federatedUserId` means the ID of a team member
 
-`https://sticky.to/[...]?sessionId=[SESSION_ID]`
+## Get access
 
-Use a URL parser or a regex to extract the `sessionId` from the query parameters. It will always be a UUID.
-
-Make a `GET` request with your public key; be sure to replace `[SESSION_ID]` with the right value:
-
-```
-curl --request GET \
-  --url 'https://sticky.to/v1/applications/---/session?sessionId=[SESSION_ID]' \
-  --header 'Authorization: Bearer public-b3c64fdc-b37f-44fc-83e4-53206e7adb8c'
-```
-
-The session code exists when the `id` key in the response matches the `sessionId` from the query parameters:
-
-```
-{
-	"id": "[SESSION_ID]",
-	"crossUserSector": "{\"name\":\"Jack Smith\"}",
-	"userSector": "{\"Verified\":1684269600,\"Discount\":10}",
-	"applicationSector": "{}"
-}
-```
-
-### Step 1: Match IDs
-
-When the session code doesn't exist, the `id` key will be different as our API is creating a new session code for you. This means your code is wrong.
-
-Assert that the `id` matches the `sessionId` you have extracted.
-
-### Step 2: Check for "verification"
-
-JSON parse the `userSector` key into an object.
-
-Assert that the `Verified` key is a number. Reject any other type or no key with name `Verified.`
-
-### Step 3: Apply discounts
-
-Decode `userSector` key and pluck `Discount` (e.g. `const { Discount } = JSON.parse(response.userSector)`)
-
-### Test data
-
-#### Test session 1 (Verified; 10% discount)
-https://sticky.to/go/flow/c2f22399-b6db-483e-9f20-1fdc98ee9d38?sessionId=1667e296-cb62-4f6e-8aa7-e898d62c3d11
-
-#### Test session 2 (Not verified; no discount)
-https://sticky.to/go/flow/c2f22399-b6db-483e-9f20-1fdc98ee9d38?sessionId=1f6fc080-56d3-4290-8a57-38dad58f34e6
-
-### Full example
-
-```
-const assert = require('assert')
-const url = require('url')
-
-function isUuid (v) {
-  return typeof v === 'string' && (v.match(/^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/i))
-}
-
-const SESSION_CODE = 'https://sticky.to/go/flow/c2f22399-b6db-483e-9f20-1fdc98ee9d38?sessionId=1667e296-cb62-4f6e-8aa7-e898d62c3d11'
-const PUBLIC_KEY = 'public-b3c64fdc-b37f-44fc-83e4-53206e7adb8c'
-
-;(async () => {
-  try {
-    const urlObject = url.parse(SESSION_CODE, true)
-    const { sessionId } = urlObject.query
-    assert(isUuid(sessionId), 'Assert 1: sessionId is not a UUID; session code is malformed')
-  
-    const r = await fetch(
-      `https://sticky.to/v1/applications/---/session?sessionId=${sessionId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${PUBLIC_KEY}`
-        }
-      }
-    )
-    const asJson = await r.json()
-
-    assert(asJson.id === sessionId, 'Assert 2: Session does not exist; check your code')
-
-    const userSectorAsJson = JSON.parse(asJson.userSector)
-    const { Verified, Discount } = userSectorAsJson
-
-    assert(typeof Verified === 'number', 'Assert 3: Session is not verified')
-
-    // SUCCESS
-    console.log(`Session code ${asJson.id} is valid (Discount=${Discount})!`)
-    process.exit(0)
-
-  } catch ({ message }) {
-
-    // FAILURE
-    console.error(message)
-    process.exit(1)
-
-  }
-})()
-
-```
+https://dashboard.sticky.to/sign-up/61L1BPJRB4
