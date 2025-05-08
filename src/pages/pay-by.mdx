@@ -2,17 +2,13 @@
 
 ## Getting UUIDs
 
-Use the dashboard URL when you are looking at the right sticker or flow.
-
-For stickers (`thingId`):
+Use the dashboard URL when you are looking at the terminal or contactless sticker.
 
 `https://dashboard.sticky.to/me/stickies/[UUID_IS_HERE]`
 
 ## How to
 
 POST JSON to `https://sticky.to/v2/trigger/public--payByThing` with an `Authorization` header as `Bearer [YOUR_PUBLIC_KEY]`.
-
-The sticker will automatically change back to its previous flow when the payment is successful.
 
 ```
 {
@@ -26,6 +22,6 @@ The sticker will automatically change back to its previous flow when the payment
 
 `currency`: String (`USD`, `GBP`, `EUR`...).
 
-`thingId`: UUID; ID of the sticker.
+`thingId`: UUID; ID of the terminal or contactless sticker.
 
 `userPaymentId`: String (external reference); optional.
