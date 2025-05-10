@@ -9,6 +9,7 @@ export default {
   "embedded-pos": "Embedded POS",
   "validate-a-session-code": "Validate a session code",
   "woocommerce": "WooCommerce",
+  "updates": "Updates",
   "kid-safety": {
     "display": "hidden"
   }
