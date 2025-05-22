@@ -12,20 +12,20 @@ Add URL parameters to the end of your **Base URL**.
 
 The only required URL parameter is `total`.
 
- - `total`: Total (Integer, 155 = 1 dollar and 55 cents)
- - `currency`: Currency (String, `USD`, `GBP`, `EUR` etc, optional)
+ - `total`: Total (Integer, mandatory, 155 = 1 dollar and 55 cents)
+ - `currency`: Currency (String, optional, `USD`, `GBP`, `EUR` etc)
  - `userPaymentId`: External reference (String, optional, can be duplicated)
 
 ## Recurring payments
 
 Add more URL parameters to the end of your **Base URL**.
 
- - `totalCpa`: Recurring amount (Integer, 155 = 1 dollar and 55 cents, optional)
- - `cpaPeriod`: Recurring frequency (String; `DAY`/`WEEK`/`MONTH`/`YEAR`, optional)
+ - `totalCpa`: Recurring amount (Integer, optional, 155 = 1 dollar and 55 cents)
+ - `cpaPeriod`: Recurring frequency (String, optional, `DAY`/`WEEK`/`MONTH`/`YEAR`)
 
 ## Security
 
-To prevent your customers from editing the URL parameters, SHA512 hash the `total`, `currency` and `userPaymentId` URL parameters in order with your private key:
+To prevent your customers from editing the URL parameters, SHA512 hash the `total`, `currency` and `userPaymentId` URL parameters in this order with your private key:
 
 ```
 sha512_in_my_language('total=1&currency=USD&userPaymentId=REF_123', 'private-abc-def')
@@ -80,4 +80,46 @@ console.log(url)
 
   echo $url;
 ?>
+```
+
+## How do I know when my payment is successful?
+
+Listen for `STICKY_PAYMENT_SUCCESS` and `STICKY_PAYMENT_FAILURE` events in JavaScript:
+
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    iframe {
+      display: block;
+      width: 480px;
+      height: 640px;
+    }
+  </style>
+</head>
+<body>
+  <iframe src="https://sticky.to/go/flow/123?total=1&userPaymentId=REF1"></iframe>
+  <script>
+    window.addEventListener(
+      'message',
+      event => {
+        const { data } = event;
+        if (typeof data !== 'object' || !data.type || !data.paymentId) {
+          return;
+        }
+        switch (data.type) {
+          case 'STICKY_PAYMENT_SUCCESS':
+            alert('Payment succeeded! ID: ' + data.paymentId);
+            break;
+          case 'STICKY_PAYMENT_FAILURE':
+            alert('Payment failed. ID: ' + data.paymentId);
+            break;
+        }
+      },
+      false
+    );
+  </script>
+</body>
+</html>
 ```
