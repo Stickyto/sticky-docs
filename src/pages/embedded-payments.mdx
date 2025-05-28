@@ -123,3 +123,21 @@ Listen for `STICKY_PAYMENT_SUCCESS` and `STICKY_PAYMENT_FAILURE` events in JavaS
 </body>
 </html>
 ```
+
+## How can I be sure the payment ID is valid?
+
+There is a simple API route to get the status of a payment:
+
+`GET` `https://sticky.to/v1/payments/[PAYMENT_ID_HERE]`. Call this route with your private key as a bearer token in the `Authorization` header:
+
+```
+curl --request GET \
+  --url https://sticky.to/v1/payments/[PAYMENT_ID_HERE] \
+  --header 'Authorization: Bearer [YOUR_PRIVATE_KEY]';
+```
+
+You will receive a JSON object. The important key is `sessionPaidAt`. When this is an integer, the payment was successful and `sessionPaidAt` is the unix timetamp of the payment. When this is null and `sessionFailedAt` is an integer, the payment was not successful. We recommend a simple assert such as:
+
+```
+assert(typeof jsonResponse.sessionPaidAt === 'number', 'Your payment was not successufl.')
+```
