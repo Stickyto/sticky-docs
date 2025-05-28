@@ -139,5 +139,5 @@ curl --request GET \
 You will receive a JSON object. The important key is `sessionPaidAt`. When this is an integer, the payment was successful and `sessionPaidAt` is the unix timetamp of the payment. When this is null and `sessionFailedAt` is an integer, the payment was not successful. We recommend a simple assert such as:
 
 ```
-assert(typeof jsonResponse.sessionPaidAt === 'number', 'Your payment was not successufl.')
+assert(typeof jsonResponse.sessionPaidAt === 'number', 'Your payment was not successful.')
 ```
