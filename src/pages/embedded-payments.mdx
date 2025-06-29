@@ -18,10 +18,13 @@ The only required URL parameter is `total`.
 
 ## Recurring payments
 
-Add more URL parameters to the end of your **Base URL**.
+Add more URL parameters to the end of your **Base URL**:
 
  - `totalCpa`: Recurring amount (Integer, optional, 155 = 1 dollar and 55 cents)
  - `cpaPeriod`: Recurring frequency (String, optional, `DAY`/`WEEK`/`MONTH`/`YEAR`)
+ - `redirectUrl`: Custom URL to go to on a successful or not successful payment
+
+`redirectUrl` takes precedence over "Redirect URL when the consumer has paid" set in your dashboard. "Append with query parameters" setting still applies.
 
 ## Security
 
