@@ -1,8 +1,12 @@
 # Sending payments to us
 
+## Connection
+
+Go to Account > Connections. Add "External payment". Press "Save".
+
 ## How to
 
-POST JSON to `https://sticky.to/v2/connectionhook/---/CONNECTION_TEVALIS/private--payment` with an `Authorization` header as `Bearer [YOUR_PRIVATE_KEY]`. Don't prepend the key with `private:`.
+POST JSON to `https://sticky.to/v2/connectionhook/---/CONNECTION_EXTERNAL_PAYMENT/private--payment` with an `Authorization` header as `Bearer [YOUR_PRIVATE_KEY]`. Don't prepend the key with `private:`.
 
 ```
 {
@@ -11,9 +15,9 @@ POST JSON to `https://sticky.to/v2/connectionhook/---/CONNECTION_TEVALIS/private
 }
 ```
 
-`sessionId`: UUID.
+`sessionId`: UUID; optional.
 
-`total`: Integer ($1.00 USD = `100`).
+`total`: Integer (1.23 USD = `123`).
 
 `discount`: Integer (not a %; $0.20 = `20`); optional.
 
@@ -33,11 +37,15 @@ POST JSON to `https://sticky.to/v2/connectionhook/---/CONNECTION_TEVALIS/private
 ]
 ```
 
+`gateway`: Payment provider ID; optional; defaults to `GATEWAY_NOOP` ("Demo").
+
+`applicationId`: Flow ID (optional).
+
 ## Full example
 
 ```
 curl --request POST \
-  --url https://sticky.to/v2/connectionhook/---/CONNECTION_TEVALIS/private--payment \
+  --url https://sticky.to/v2/connectionhook/---/CONNECTION_EXTERNAL_PAYMENT/private--payment \
   --header 'Authorization: Bearer [YOUR_PRIVATE_KEY]' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -63,7 +71,7 @@ curl --request POST \
 
 ### Should the `total` be before or after a discount (scenario: bill was 120 discounted by 20 to 100)?
 
-`discount` should be `20` and `total` should be 100. `total` is the actual amount the consumer pays.
+`discount` should be 20 and `total` should be 100. `total` is the actual amount the consumer pays.
 
 ### Is each `cart` item before or after a discount?
 

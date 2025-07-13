@@ -5,7 +5,7 @@ export default {
   "refunds": "Refunds",
   "pay-by": "Pay by sticker or terminal",
   "pay-by-link": "Pay by link",
-  "tevalis--inbound-payments": "Sending payments to us",
+  "inbound-payments": "Sending payments to us",
   "embedded-pos": "Embedded POS",
   "validate-a-session-code": "Validate a session code",
   "woocommerce": "WooCommerce",
