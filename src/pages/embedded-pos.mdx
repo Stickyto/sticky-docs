@@ -2,20 +2,46 @@
 
 POS ("Point of sale") can be embedded in an iframe.
 
-You will need to expose your private key, so only embed POS in safe, non-consumer environments where the URL is not visible.
+Only embed POS in safe, non-consumer environments where the URL is not visible.
 
 ## URL
 
-Copy the URL from the "Point of sale" in the dashboard.
+Form the URL using your private key, public key and the private key of one team member.
 
 Example:
 
 ```
-https://dashboard.sticky.to/ops-manager-2?userPrivateKey=[YOUR_PRIVATE_KEY]&userPublicKey=[YOUR_PUBLIC_KEY]
+https://dashboard.sticky.to/ops-manager-2?userPrivateKey=[YOUR_PRIVATE_KEY]&userPublicKey=[YOUR_PUBLIC_KEY]&federatedUserPrivateKey=[YOUR_TEAM_MEMBER_PRIVATE_KEY]
 ```
 
 ## Optional URL parameters
 
- - `setPaymentTotal`: integer total (55 = 55 cents; 155 = 1 dollar and 55 cents)
+ - `setPaymentTotal`: Integer (1.23 USD = `123`)
 
- - `setPaymentUserPaymentId`: string reference
+ - `setPaymentUserPaymentId`: String reference
+
+## Payouts
+
+POST JSON to `https://sticky.to/v2/trigger/oct` with an `Authorization` header as `Bearer [YOUR_PRIVATE_KEY]`.
+
+```
+{
+  "vaultName": "S00007-1234567890",
+  "total": 1
+}
+```
+
+`vaultName`: Same as `setPaymentUserPaymentId` when embedding the POS.
+
+`total`: Integer (1.23 USD = `123`).
+
+```
+curl --request POST \
+  --url https://sticky.to/v2/trigger/oct \
+  --header 'Authorization: Bearer private:[YOUR_PRIVATE_KEY]' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"vaultName": "S00007-1234567890",
+	"total": 1
+}'
+```
