@@ -1,6 +1,6 @@
 # Get payments
 
-`GET /v1/payments`.
+`GET https://sticky.to/v1/payments`.
 
 ## Authentication
 
@@ -9,8 +9,6 @@ Use an `Authorization` header as `Bearer [YOUR_PRIVATE_KEY]`.
 ## Supported MIME types
 
 `application/json`: array of JSON objects. The response reflects our internal data structure meaning fields may be added over time. Existing fields will always be 100% backwards compatible.
-
-`text/csv`: Plain text URLs.
 
 ## Query parameters
 
