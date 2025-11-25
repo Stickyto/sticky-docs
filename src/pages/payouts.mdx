@@ -1,0 +1,79 @@
+# Payouts
+
+Use the dashboard URL when you are looking at the flow you want to embed:
+
+`https://dashboard.sticky.to/me/flows/[UUID_IS_HERE]`
+
+Your **Base URL** is `https://sticky.to/go/flow/[UUID_IS_HERE]`.
+
+## Introduction
+
+Add URL parameters to the end of your **Base URL**.
+
+The only required URL parameter is `total`.
+
+ - `total`: Total (Integer, mandatory, 155 = 1 dollar and 55 cents)
+ - `currency`: Currency (String, optional, `USD`, `GBP`, `EUR` etc)
+ - `userPaymentId`: External reference (String, optional, can be duplicated)
+ - `redirectUrl`: Custom URL to go to on a successful or not successful payout
+
+ `redirectUrl` takes precedence over "Redirect URL when the consumer has paid" flow setting in your dashboard. "Append with query parameters" flow setting still applies.
+
+## Security
+
+To prevent your customers from editing the URL parameters, SHA512 hash the `total`, `currency` and `userPaymentId` URL parameters in this order with your private key:
+
+```
+sha512_in_my_language('total=1&currency=USD&userPaymentId=REF_123', 'private-abc-def')
+```
+
+Add this hash to the end of your URL as `&hash=...`.
+
+## Example: Node.js
+
+```
+const crypto = require('crypto')
+const total = '500'
+const currency = 'GBP'
+const userPaymentId = '293'
+
+const flow = 'https://sticky.to/go/flow/123'
+const privateKey = 'private-456'
+
+function getSignature(what, privateKey) {
+  return crypto.createHmac('sha512', privateKey)
+    .update(what)
+    .digest('hex')
+}
+
+const url = `${flow}?total=${total}&currency=${currency}&userPaymentId=${userPaymentId}&hash=${getSignature(`total=${total}&currency=${currency}&userPaymentId=${userPaymentId}`, privateKey)}`
+
+console.log(url)
+```
+
+## Example: PHP
+
+```
+<?php
+
+  $total = '500';
+  $currency = 'GBP';
+  $userPaymentId = '293';
+
+  $flow = 'https://sticky.to/go/flow/123';
+  $privateKey = 'private-456';
+
+  function get_signature($what, $privateKey) {
+    return hash_hmac(
+      'sha512',
+      $what,
+      $privateKey,
+      false
+    );
+  }
+
+  $url = $flow . '?total=' . $total . '&currency=' . $currency . '&userPaymentId=' . $userPaymentId . '&hash=' . get_signature('total=' . $total . '&currency=' . $currency . '&userPaymentId=' . $userPaymentId, $privateKey);
+
+  echo $url;
+?>
+```
