@@ -1,5 +1,31 @@
 # Updates
 
+# 11.8.3 (22 February 2026)
+ - Feature: When the dashboard is embedded in other platforms (e.g. via browser extension and the total is passed through in the URL), Sticky Pay behaves as if is embedded, e.g. doesn't reset to the "Enter Total" screen after a successful payment
+ - Feature: When the flow list is in "hammer mode", show if a flow isn't connected to a payment provider
+ - Flow step "Button": "Big icon with text below" setting
+ - Add flow steps "Columns → Start" / "Columns → Flip" / "Columns → End"
+ - Coming up: Enhanced overall UI for "Refund mode"
+
+# 11.8.2 (17 February 2026)
+ - Feature: Report of refunds per day in expand/collapse format
+ - Feature Report of payments/refunds per day shows total volume in each expand/collapse
+ - Feature: Regex control to ignore specific Token Vault (Customers) references
+ - Feature: Control whether team members get notified about their own "Not secure" payments (e.g. Virtual Terminal)
+ - Feature: Improve dashboard setup for partners
+ - Add flow step "Date (expansive)" giving a full calendar view that can skip weekends and UK public holidays
+ - Bug: Better respect partner-level UI overrides like "Flows" which for one partner should be "Controllers"
+ - Bug: Flow step "Checkbox" better respects different font sizes over multiple lines
+
+
+# 11.8.1 (9 February 2026)
+ - Feature: Report of payments per day in expand/collapse format
+ - Feature: Show "platform fees" (applicable to Ryft payment provider)
+ - Feature: Improve UX of adding virtual stickies
+
+## 11.8.0 (18 January 2026)
+ - Version 2 of "Live payments" relying on dashboard level authentication
+
 ## 11.7.0 (30 December 2025)
 
  - Feature: Send reminders for links that have not had a connected payment paid
