@@ -1,8 +1,15 @@
 # Updates
 
+# 11.8.7 (8 March 2026)
+ - Feature: Move links list filtering to backend to improve performance, limiting the number of results to 250, and remember the filter
+ - Feature: Filter links list by PAID / NOT PAID / 
+ - Feature: Tag specific flows as applying to "Accept: Card machine"
+ - Bug: Filter payments list by total is respected in CSV download
+ - Bug: Don't auto-go to "Not secure" flows when "Accept: Card machine" is enabled at dashboard level
+
 # 11.8.6 (6 March 2026)
  - Feature: Log successful webhooks
- - Feature: override email notifications per flow
+ - Feature: Override email notifications per flow
 
 # 11.8.5 (28 February 2026)
  - Intermediate bump
@@ -30,7 +37,6 @@
  - Add flow step "Date (expansive)" giving a full calendar view that can skip weekends and UK public holidays
  - Bug: Better respect partner-level UI overrides like "Flows" which for one partner should be "Controllers"
  - Bug: Flow step "Checkbox" better respects different font sizes over multiple lines
-
 
 # 11.8.1 (9 February 2026)
  - Feature: Report of payments per day in expand/collapse format
