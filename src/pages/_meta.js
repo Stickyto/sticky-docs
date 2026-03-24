@@ -1,6 +1,7 @@
 export default {
   "index": "Index",
   "embedded-payments": "Embedded payments",
+  "xero": "Xero",
   "webhooks": "Webhooks",
   "refunds": "Refunds",
   "pay-by": "Pay by sticker or terminal",
@@ -9,7 +10,7 @@ export default {
   "embedded-pos": "Embedded POS",
   "validate-a-session-code": "Validate a session code",
   "woocommerce": "WooCommerce",
-  "updates": "Updates",
+  "updates": "Changelog",
   "kid-safety": {
     "display": "hidden"
   }
