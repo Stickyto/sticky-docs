@@ -38,7 +38,7 @@ sha512_in_my_language('total=1&currency=USD&userPaymentId=REF_123', 'private-abc
 
 Add this hash to the end of your URL as `&hash=...`.
 
-## Example: Node.js
+### Example: Node.js
 
 ```
 const crypto = require('crypto')
@@ -60,7 +60,7 @@ const url = `${flow}?total=${total}&currency=${currency}&userPaymentId=${userPay
 console.log(url)
 ```
 
-## Example: PHP
+### Example: PHP
 
 ```
 <?php
@@ -87,7 +87,7 @@ console.log(url)
 ?>
 ```
 
-## How do I know when my payment is successful?
+## Respond to a successful payment in your frontend
 
 Listen for `STICKY_PAYMENT_SUCCESS` and `STICKY_PAYMENT_FAILURE` events in JavaScript:
 
@@ -129,7 +129,7 @@ Listen for `STICKY_PAYMENT_SUCCESS` and `STICKY_PAYMENT_FAILURE` events in JavaS
 </html>
 ```
 
-## How can I be sure the payment ID is valid?
+## Check a payment status in your backend
 
 There is a simple API route to get the status of a payment:
 
@@ -145,4 +145,27 @@ You will receive a JSON object. The important key is `sessionPaidAt`. When this 
 
 ```
 assert(typeof jsonResponse.sessionPaidAt === 'number', 'Your payment was not successful.')
+```
+
+## Capture later
+
+You can update the `total` of a payment with a `PATCH`:
+
+```
+curl 'https://sticky.to/v1/payments/[PAYMENT_ID_HERE]' \
+  -X 'PATCH' \
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer [YOUR_PRIVATE_KEY]' \
+  -H 'content-type: application/json' \
+  --data-raw '{"total":6076}';
+```
+
+Then capture it:
+
+```
+curl 'https://sticky.to/v2/trigger/capture-later' \
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer [YOUR_PRIVATE_KEY]//' \
+  -H 'Content-Type: application/json' \
+  --data-raw '{"paymentId":"[PAYMENT_ID_HERE]"}';
 ```
