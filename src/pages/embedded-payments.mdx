@@ -115,10 +115,10 @@ Listen for `STICKY_PAYMENT_SUCCESS` and `STICKY_PAYMENT_FAILURE` events in JavaS
         }
         switch (data.type) {
           case 'STICKY_PAYMENT_SUCCESS':
-            alert('Payment succeeded! ID: ' + data.paymentId);
+            alert('Payment succeeded; ID: ' + data.paymentId);
             break;
           case 'STICKY_PAYMENT_FAILURE':
-            alert('Payment failed. ID: ' + data.paymentId);
+            alert('Payment failed; ID: ' + data.paymentId);
             break;
         }
       },
