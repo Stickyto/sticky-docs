@@ -141,10 +141,26 @@ curl --request GET \
   --header 'Authorization: Bearer [YOUR_PRIVATE_KEY]';
 ```
 
-You will receive a JSON object. The important key is `sessionPaidAt`. When this is an integer, the payment was successful and `sessionPaidAt` is the unix timetamp of the payment. When this is null and `sessionFailedAt` is an integer, the payment was not successful. We recommend a simple assert such as:
+You will receive a JSON object. The important key is `sessionPaidAt`. When this is an integer, the payment was successful and `sessionPaidAt` is a unix timestamp. When this is null and `sessionFailedAt` is an integer, the payment was not successful. We recommend using a simple assert:
 
 ```
 assert(typeof jsonResponse.sessionPaidAt === 'number', 'Your payment was not successful.')
+```
+
+## QR code
+
+Our API will happily generate a QR code for you and return PNG data with HTTP `Content-Type` `image/png`, making it easy to use in a HTML `<img />` tag.
+
+`GET` `https://sticky.to/v2/qr/[URL_HERE]`
+
+Be sure to URL-encode your URL parameter:
+
+```
+render () {
+  return (
+    <img src={`https://sticky.to/v2/qr/${encodeURIComponent('https://sticky.to/go/flow/123?total=1')}`} />
+  )
+}
 ```
 
 ## Capture later

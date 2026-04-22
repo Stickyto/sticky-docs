@@ -1,10 +1,10 @@
 export default {
-  "index": "Index",
+  "index": "Get started",
   "embedded-payments": "Embedded payments",
   "xero": "Xero",
   "webhooks": "Webhooks",
   "refunds": "Refunds",
-  "pay-by": "Pay by sticker or terminal",
+  "pay-by": "Pay by sticker or fixed QR code",
   "pay-by-link": "Pay by link",
   "inbound-payments": "Sending payments to us",
   "embedded-pos": "Embedded POS",
