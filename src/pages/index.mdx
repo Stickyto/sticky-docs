@@ -1,15 +1,10 @@
-## API endpoints
-
- - `https://sticky.to`
- - `https://instantdebit.co.uk`
-
 ## Authentication
 
-Go to **dashboard.sticky.to/developer/keys** to find your public key (read only / used by consumers) and private key (danger - do not embed in public facing scenarios!).
+Go to **dashboard.sticky.to/developer/keys** to find your public key (read only / used by consumers) and private key (keep this secret).
 
-Use these keys to authenticate against our API, which is fully RESTful API and sends/receives JSON exactly as you'd expect.
+Use these keys to authenticate against our API, which is RESTful and sends/receives JSON.
 
-There is no sandbox environment under a different URL. Send us a message if you want another dashboard with different keys.
+There is no sandbox API endpoint. Contact us if you want another production dashboard with different keys to use as a playground.
 
 Authentication is via `Bearer` tokens.
 
@@ -25,13 +20,11 @@ Other routes accept just public or private keys. One example is `POST /v1/produc
 
 Don't prepend the key with `private:`.
 
-In the examples below, add the correct domain before `/v1` or `/v2`, for example `https://sticky.to/v2` or `https://instantdebit.co.uk/v2`.
-
 ### Example: public key
 
 ```
 curl --request GET \
-  --url /v1/users/me \
+  --url https://sticky.to/v1/users/me \
   --header 'Authorization: Bearer public:public-b3c64fdc-b37f-44fc-83e4-53206e7adb8c'
 ```
 
@@ -48,7 +41,7 @@ Notice that the response is limited:
 
 ```
 curl --request GET \
-  --url /v1/users/me \
+  --url https://sticky.to/v1/users/me \
   --header 'Authorization: Bearer private:private-371eff35-9bff-461e-b97b-d9405176e257'
 ```
 

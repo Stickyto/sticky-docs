@@ -1,23 +1,33 @@
-# Embedded POS
+# Embed Sticky Pay
 
-POS ("Point of sale") can be embedded in an iframe.
+Only embed in safe, non-consumer environments where the URL is not visible.
 
-Only embed POS in safe, non-consumer environments where the URL is not visible.
+## Base URLs
 
-## URL
+ - Welcome menu: `https://dashboard.sticky.to/sticky-pay`
 
-Form the URL using your private key, public key and the private key of one team member.
+ - With navigation bar: `https://dashboard.sticky.to/sticky-pay-sticky-pay`
 
-Example:
+ - Without navigation bar: `https://dashboard.sticky.to/ops-manager-2`
+
+## API key parameter
 
 ```
-https://dashboard.sticky.to/ops-manager-2?userPrivateKey=[YOUR_PRIVATE_KEY]&userPublicKey=[YOUR_PUBLIC_KEY]&federatedUserPrivateKey=[YOUR_TEAM_MEMBER_PRIVATE_KEY]
+https://dashboard.sticky.to/ops-manager-2?logInToken=[YOUR_API_KEY]
 ```
 
-## Optional URL parameters
+## More URL parameters
 
  - `setPaymentTotal`: Integer (1.23 USD = `123`)
 
  - `setPaymentCurrency`: Currency (String, optional, `USD`, `GBP`, `EUR` etc)
 
  - `setPaymentUserPaymentId`: String reference
+
+## Legacy API key parameters
+
+Use your dashboard-level private key, public key and the private key of a team member:
+
+```
+https://dashboard.sticky.to/ops-manager-2?userPrivateKey=[YOUR_PRIVATE_KEY]&userPublicKey=[YOUR_PUBLIC_KEY]&federatedUserPrivateKey=[YOUR_TEAM_MEMBER_PRIVATE_KEY]
+```
