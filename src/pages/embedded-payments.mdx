@@ -147,6 +147,14 @@ You will receive a JSON object. The important key is `sessionPaidAt`. When this 
 assert(typeof jsonResponse.sessionPaidAt === 'number', 'Your payment was not successful.')
 ```
 
+## Discounts
+
+Add flow step `Set discount (value)` *or* `Set discount (%)` then use URL parameters:
+
+ - `setDiscountPercentage`: 20 = 20%
+
+ - `setDiscountAbsolute`: Integer, 155 = 1 dollar and 55 cents
+
 ## QR code
 
 Our API will happily generate a QR code for you and return PNG data with HTTP `Content-Type` `image/png`, making it easy to use in a HTML `<img />` tag.
