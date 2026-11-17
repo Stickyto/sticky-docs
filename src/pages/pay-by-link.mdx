@@ -1,18 +1,6 @@
 # Pay by link
 
-## One time set up: Add a "Take a payment flow"
-
-Choose **Add a flow**:
-
-![](/pbl-flow-1.png)
-
-Choose **Take a payment**:
-
-![](/pbl-flow-2.png)
-
-Go inside the flow by choosing it from the list.
-
-## Get its UUID
+## Get your flow's UUID
 
 Use the dashboard URL when you are looking at the flow.
 
@@ -22,7 +10,7 @@ Keep the `[UUID_OF_FLOW]` to hand.
 
 ## Step 1: Add a payment
 
-POST JSON to `https://sticky.to/v1/applications/unknown-application-3/payments` with an `Authorization` header as `Bearer [YOUR_PRIVATE_KEY]`. Even though this URL looks strange it is 100% correct; you don't need `[UUID_OF_FLOW]` until later.
+POST JSON to `https://sticky.to/v1/applications/unknown-application-3/payments` with an `Authorization` header as `Bearer [YOUR_PRIVATE_KEY]`. This fixed URL is correct; don't replace `unknown-application-3`.
 
 ```
 {
